@@ -71,6 +71,13 @@ static KNOWN_CLIS: &[KnownCli] = &[
         credentials_path: None,
         repo_url: None,
     },
+    KnownCli {
+        binary_name: "hol-guard",
+        display_name: "HOL Guard",
+        api_domains: &[],
+        credentials_path: None,
+        repo_url: Some("https://github.com/hashgraph-online/hol-guard"),
+    },
 ];
 
 /// FNV-1a 64-bit hash — deterministic across Rust versions (unlike DefaultHasher).
@@ -3799,6 +3806,19 @@ mod config_tests {
         let id3 = cli_stable_id("lark-cli");
         assert_eq!(id1, id2);
         assert_ne!(id1, id3);
+    }
+
+    #[test]
+    fn test_hol_guard_known_cli_metadata() {
+        let hol_guard = KNOWN_CLIS
+            .iter()
+            .find(|cli| cli.binary_name == "hol-guard")
+            .expect("HOL Guard should be a known CLI");
+        assert_eq!(hol_guard.display_name, "HOL Guard");
+        assert_eq!(
+            hol_guard.repo_url,
+            Some("https://github.com/hashgraph-online/hol-guard")
+        );
     }
 
     #[test]
